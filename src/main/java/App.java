@@ -6,6 +6,8 @@ import static spark.Spark.*;
 
 public class App {
     public static void main(String[] args) {
+      staticFileLocation("/public");
+      String layout = "templates/layout.vtl";
 
         //RESTful ARCHITECTURE
         //Use POST to create something on the server
@@ -17,13 +19,19 @@ public class App {
 
         //ROUTES: Home Page
 
-        // get("/", (request, response) -> {
-        //     HashMap<String, Object> model = new HashMap<String, Object>();
-        //     model.put("template", "templates/index.vtl");
-        //     return new ModelAndView(model, layout);
-        // }, new VelocityTemplateEngine());
+        get("/", (request, response) -> {
+          HashMap<String, Object> model = new HashMap<String, Object>();
+          model.put("template", "templates/home.vtl");
+          return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
 
         //ROUTES: Identification of Resources
+
+        get("artists/new", (request, response) -> {
+          HashMap<String, Object> model = new HashMap<String, Object>();
+          model.put("template", "templates/artists-new.vtl");
+          return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
 
         //ROUTES: Changing Resources
 
