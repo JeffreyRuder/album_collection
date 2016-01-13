@@ -17,11 +17,11 @@ public class App {
 
         //ROUTES: Home Page
 
-        get("/", (request, response) -> {
-            HashMap<String, Object> model = new HashMap<String, Object>();
-            model.put("template", "templates/index.vtl");
-            return new ModelAndView(model, layout);
-        }, new VelocityTemplateEngine());
+        // get("/", (request, response) -> {
+        //     HashMap<String, Object> model = new HashMap<String, Object>();
+        //     model.put("template", "templates/index.vtl");
+        //     return new ModelAndView(model, layout);
+        // }, new VelocityTemplateEngine());
 
         //ROUTES: Identification of Resources
 
