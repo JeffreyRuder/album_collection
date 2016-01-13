@@ -1,0 +1,22 @@
+<h1>Albums by $artist.getName()</h1>
+
+#if ($failedToAdd)
+  <p>This album is already entered. Choose a new album name to try again.</p>
+#end
+
+<ul>
+#foreach ($album in $albums)
+  #if ($album.getArtist().getName().equals($artist.getName()))
+    <li><a href="/artists/$artist.getId()/$album.getId()">$album.getName()</a></li>
+  #end
+#end
+</ul>
+
+<h2>Add an Album</h2>
+<form action="/artists/$artist.getId()" method="post">
+  <label for="albumname">Album Name</label>
+  <input id="albumname" name="albumname" type="text" required>
+  <button type="submit" class="btn btn-default" id="albumsubmit">Add Album</button>
+</form>
+
+<a href="/artists" class="btn btn-default">Return to Artists List</a>

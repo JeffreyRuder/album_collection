@@ -33,6 +33,30 @@ public class App {
           return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
+        get("/artists", (request, response) -> {
+          HashMap<String, Object> model = new HashMap<String, Object>();
+          model.put("artists", Artist.all());
+          model.put("template", "templates/artists.vtl");
+          return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
+        get("/artists/:id", (request, response) -> {
+          HashMap<String, Object> model = new HashMap<String, Object>();
+          Artist artist = Artist.find(Integer.parseInt(request.params(":id")));
+          model.put("artist", artist);
+          model.put("albums", Album.all());
+          model.put("template", "templates/albums.vtl");
+          return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
+        get("/artists/:id1/:id2", (request, response) -> {
+          HashMap<String, Object> model = new HashMap<String, Object>();
+          Album album = Album.find(Integer.parseInt(request.params(":id2")));
+          model.put("album", album);
+          model.put("template", "templates/album-details.vtl");
+          return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
         //ROUTES: Changing Resources
 
         post("/artists", (request, response) -> {
@@ -55,6 +79,32 @@ public class App {
           model.put("artists", Artist.all());
 
           model.put("template", "templates/artists.vtl");
+          return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
+        post("/artists/:id", (request, response) -> {
+          HashMap<String, Object> model = new HashMap<String, Object>();
+          Artist artist = Artist.find(Integer.parseInt(request.params(":id")));
+
+          String userAlbumName = request.queryParams("albumname");
+          boolean alreadyInAlbums = false;
+
+          for (Album album : Album.all()) {
+            String name = album.getName();
+            if (name.equals(userAlbumName)) {
+              alreadyInAlbums = true;
+            }
+          }
+
+          if (!alreadyInAlbums) {
+            Album newAlbum = new Album(userAlbumName, artist);
+          }
+
+          model.put("artist", artist);
+          model.put("failedToAdd", alreadyInAlbums);
+          model.put("albums", Album.all());
+
+          model.put("template", "templates/albums.vtl");
           return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 

@@ -61,4 +61,49 @@ public class IntegrationTest extends FluentTest {
     submit(".btn");
     assertThat(pageSource()).contains("This artist is already entered.");
   }
+
+  @Test
+  public void rendersArtistPageTest() {
+    goTo("http://localhost:4567/artists/new");
+    fill("#artistname").with("The Beatles");
+    submit(".btn");
+    click("a", withText("The Beatles"));
+    assertThat(pageSource()).contains("The Beatles");
+  }
+
+  @Test
+  public void listsAlbumsTest() {
+    goTo("http://localhost:4567/artists/new");
+    fill("#artistname").with("The Beatles");
+    submit(".btn");
+    click("a", withText("The Beatles"));
+    fill("#albumname").with("The White Album");
+    submit("#albumsubmit");
+    assertThat(pageSource()).contains("The White Album");
+  }
+
+  @Test
+  public void listsSameAlbumTwiceErrorTest() {
+    goTo("http://localhost:4567/artists/new");
+    fill("#artistname").with("The Beatles");
+    submit(".btn");
+    click("a", withText("The Beatles"));
+    fill("#albumname").with("The White Album");
+    submit("#albumsubmit");
+    fill("#albumname").with("The White Album");
+    submit("#albumsubmit");
+    assertThat(pageSource()).contains("This album is already entered.");
+  }
+
+  @Test
+  public void rendersAlbumPageTest() {
+    goTo("http://localhost:4567/artists/new");
+    fill("#artistname").with("The Beatles");
+    submit(".btn");
+    click("a", withText("The Beatles"));
+    fill("#albumname").with("The White Album");
+    submit("#albumsubmit");
+    click("a", withText("The White Album"));
+    assertThat(pageSource()).contains("Album Details: The White Album");
+  }
 }
