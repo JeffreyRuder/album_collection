@@ -29,4 +29,36 @@ public class IntegrationTest extends FluentTest {
     click("a", withText("Add a New Artist"));
     assertThat(pageSource()).contains("Add an Artist");
   }
+
+  @Test
+  public void listsArtistsPageTest() {
+    goTo("http://localhost:4567/");
+    click("a", withText("Add a New Artist"));
+    fill("#artistname").with("The Beatles");
+    submit(".btn");
+    assertThat(pageSource()).contains("The Beatles");
+  }
+
+  @Test
+  public void listsMultipleArtistsPageTest() {
+    goTo("http://localhost:4567/artists/new");
+    fill("#artistname").with("The Beatles");
+    submit(".btn");
+    goTo("http://localhost:4567/artists/new");
+    fill("#artistname").with("The Rolling Stones");
+    submit(".btn");
+    assertThat(pageSource()).contains("The Beatles");
+    assertThat(pageSource()).contains("The Rolling Stones");
+  }
+
+  @Test
+  public void listsSameArtistTwiceErrorTest() {
+    goTo("http://localhost:4567/artists/new");
+    fill("#artistname").with("The Beatles");
+    submit(".btn");
+    goTo("http://localhost:4567/artists/new");
+    fill("#artistname").with("The Beatles");
+    submit(".btn");
+    assertThat(pageSource()).contains("This artist is already entered.");
+  }
 }

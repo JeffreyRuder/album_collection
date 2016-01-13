@@ -1,0 +1,13 @@
+<h1>All Artists</h1>
+
+#if ($failedToAdd)
+  <p>This artist is already entered. Select Add a New Artist to try again, or select the existing artist to add an album to that artist.</p>
+#end
+
+<ul>
+#foreach ($artist in $artists)
+  <li><a href="/artists/$artist.getId()">$artist.getName()</a></li>
+#end
+</ul>
+
+<a href="/artists/new" class="btn btn-default">Add a New Artist</a>

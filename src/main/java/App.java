@@ -35,5 +35,28 @@ public class App {
 
         //ROUTES: Changing Resources
 
+        post("/artists", (request, response) -> {
+          HashMap<String, Object> model = new HashMap<String, Object>();
+          String userArtistName = request.queryParams("artistname");
+          boolean alreadyInArtists = false;
+
+          for (Artist artist : Artist.all()) {
+            String name = artist.getName();
+            if (name.equals(userArtistName)) {
+              alreadyInArtists = true;
+            }
+          }
+
+          if (!alreadyInArtists) {
+            Artist newArtist = new Artist(userArtistName);
+          }
+
+          model.put("failedToAdd", alreadyInArtists);
+          model.put("artists", Artist.all());
+
+          model.put("template", "templates/artists.vtl");
+          return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
     }
 }
