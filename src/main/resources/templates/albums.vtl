@@ -1,4 +1,5 @@
-<h1>Albums by $artist.getName()</h1>
+<h1>Album Collection</h1>
+<h2>Albums by $artist.getName()</h2>
 
 #if ($failedToAdd)
   <p>This album is already entered. Choose a new album name to try again.</p>
@@ -12,11 +13,13 @@
 #end
 </ul>
 
-<h2>Add an Album</h2>
-<form action="/artists/$artist.getId()" method="post">
-  <label for="albumname">Album Name</label>
-  <input id="albumname" name="albumname" type="text" required>
-  <button type="submit" class="btn btn-default" id="albumsubmit">Add Album</button>
-</form>
+<div class="form-group">
+  <h2>Add an Album</h2>
+  <form action="/artists/$artist.getId()" method="post">
+    <label for="albumname">Album Name</label>
+    <input id="albumname" name="albumname" type="text" required>
+    <button type="submit" class="btn btn-default" id="albumsubmit">Add Album</button>
+  </form>
+</div>
 
 <a href="/artists" class="btn btn-default">Return to Artists List</a>

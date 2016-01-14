@@ -1,8 +1,11 @@
-<h1>All Artists</h1>
+<h1>Album Collection</h1>
+<h2>All Artists</h2>
 
 #if ($failedToAdd)
   <p>This artist is already entered. Select Add a New Artist to try again, or select the existing artist to add an album to that artist.</p>
 #end
+
+<p>Select an artist to add albums by that artist.</p>
 
 <ul>
 #foreach ($artist in $artists)

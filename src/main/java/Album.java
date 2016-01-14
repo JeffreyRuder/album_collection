@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Album {
@@ -6,12 +7,14 @@ public class Album {
   private final String mName;
   private final Artist mArtist;
   private int mId;
+  private LocalDateTime mCreatedAt;
 
   //CONSTRUCTOR
 
   public Album(String name, Artist artist) {
     mName = name;
     mArtist = artist;
+    mCreatedAt = LocalDateTime.now();
     instances.add(this);
     mId = instances.size();
   }
@@ -46,5 +49,9 @@ public class Album {
 
   public Artist getArtist() {
     return mArtist;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return mCreatedAt;
   }
 }
